@@ -7,14 +7,28 @@ public class ScriptMegaman : MonoBehaviour
     private Animator anim;
     private Rigidbody2D rbd;
     public float vel;
+    public float pulo;
     private bool direita = true;
+    private bool chao;
     // Start is called before the first frame update
     void Start()
     {
+        pulo = 15000;
         vel = 6;
         rbd = GetComponent<Rigidbody2D>();
         anim = GetComponent<Animator>();
 
+    }
+
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        chao = true;
+    }
+
+    private void OnCollisionExit2D(Collision2D collision)
+    {
+        chao = false;
     }
 
     // Update is called once per frame
@@ -35,6 +49,12 @@ public class ScriptMegaman : MonoBehaviour
         }else
         {
             anim.SetBool("movimento", true);
+        }
+
+        if (Input.GetKeyDown(KeyCode.Space) && chao) 
+        {
+
+            rbd.AddForce(new Vector2(0,pulo));
         }
 
 
